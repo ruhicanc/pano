@@ -8,15 +8,20 @@
 <style>
   html, body { margin: 0; height: 100%; background: #1e1033; }
   iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
-  noscript a { color: #fff; font: 16px system-ui, sans-serif; display: block; padding: 24px; }
+  #yedek { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); display: none;
+           font: 14px system-ui, sans-serif; background: #fff; color: #1e1033; padding: 8px 14px; border-radius: 8px; }
 </style>
 </head>
 <body>
-<iframe
-  src="https://script.google.com/macros/s/AKfycbwnjpGkEY9kIlUtvoZo3LI08N2GJe8b9HQIGgH7mruxPPMFGfGIyLqTOxvYWsRv_lfNNA/exec"
-  title="TN VAE Dashboard"
-  allow="clipboard-read; clipboard-write; fullscreen"
-  allowfullscreen></iframe>
-<noscript><a href="https://script.google.com/macros/s/AKfycbwnjpGkEY9kIlUtvoZo3LI08N2GJe8b9HQIGgH7mruxPPMFGfGIyLqTOxvYWsRv_lfNNA/exec">Panoyu aç</a></noscript>
+<iframe id="pano" src="https://script.google.com/macros/s/AKfycbwnjpGkEY9kIlUtvoZo3LI08N2GJe8b9HQIGgH7mruxPPMFGfGIyLqTOxvYWsRv_lfNNA/exec" title="TN VAE Dashboard" allow="clipboard-read; clipboard-write; fullscreen" allowfullscreen></iframe>
+<a id="yedek" href="https://script.google.com/macros/s/AKfycbwnjpGkEY9kIlUtvoZo3LI08N2GJe8b9HQIGgH7mruxPPMFGfGIyLqTOxvYWsRv_lfNNA/exec">Pano açılmadıysa buraya tıklayın</a>
+<script>
+  // Pano açıldığında çerçeveden "tnvae-hazir" sinyali gelir. Tarayıcı Google çerezlerini engellediği
+  // için çerçeve içinde açılamazsa (ör. Opera GX, Safari) sayfa doğrudan pano adresine geçer.
+  var hazir = false;
+  window.addEventListener('message', function(e) { if (e.data === 'tnvae-hazir') hazir = true; });
+  setTimeout(function() { if (!hazir) document.getElementById('yedek').style.display = 'block'; }, 8000);
+  setTimeout(function() { if (!hazir) location.replace('https://script.google.com/macros/s/AKfycbwnjpGkEY9kIlUtvoZo3LI08N2GJe8b9HQIGgH7mruxPPMFGfGIyLqTOxvYWsRv_lfNNA/exec'); }, 15000);
+</script>
 </body>
 </html>
